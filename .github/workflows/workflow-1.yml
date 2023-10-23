@@ -15,13 +15,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ssh-key: ${{ secrets.COMMIT_KEY }}
-      - shell: bash
-        run: |
-          sec="$EPOCHSECONDS"
-          echo $sec > version.txt
+      - run: |
+          echo "$EPOCHSECONDS" > version.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add version.txt
-          git tag -a "$sec"
+          git tag -a "$EPOCHSECONDS"
           git commit -m "Bump version [versioning]"
           git push -u --tags
