@@ -16,9 +16,11 @@ jobs:
         with:
           ssh-key: ${{ secrets.COMMIT_KEY }}
       - run: |
-          echo $EPOCHSECONDS > version.txt
+          sec="$EPOCHSECONDS"
+          echo $sec > version.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add version.txt
+          git tag -a "$sec"
           git commit -m "Bump version [versioning]"
-          git push -u
+          git push -u --tags
