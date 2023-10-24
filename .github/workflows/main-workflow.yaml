@@ -7,8 +7,14 @@ jobs:
   wf1:
     uses: ./.github/workflows/workflow-1.yml
 
+  wffail:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+
   wf2:
     needs: [wf1]
     uses: ./.github/workflows/workflow-2.yml
+    if: ${{ always() }}
     with:
-      name: ${{ needs.wf1.outputs.arr }}
+      name: ${{ toJson(needs.*.result) }}
