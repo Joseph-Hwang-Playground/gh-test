@@ -8,12 +8,13 @@ jobs:
     uses: ./.github/workflows/workflow-1.yml
 
   wffail:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - run: exit 1
 
   wf2:
-    needs: [wf1]
+    needs: [wf1, wffail]
     uses: ./.github/workflows/workflow-2.yml
     if: ${{ always() }}
     with:
