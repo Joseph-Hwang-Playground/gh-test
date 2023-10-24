@@ -11,4 +11,4 @@ jobs:
     needs: [wf1]
     uses: ./.github/workflows/workflow-2.yml
     with:
-      name: asdfasdfas
+      name: ${{ needs.wf1.outputs.arr }}

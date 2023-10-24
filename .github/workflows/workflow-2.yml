@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v3
       - run: echo "Output is $_NAME"
         env:
-          _NAME: ${{ github.event.inputs.name }}
+          _NAME: ${{ inputs.name }}
