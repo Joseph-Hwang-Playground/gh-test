@@ -6,12 +6,11 @@ on:
         description: "The name to say hello to"
         required: true
 
-env:
-  NAME: ${{ github.event.inputs.name }}
-
 jobs:
   some-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: echo "$NAME"
+        env:
+          NAME: ${{ github.event.inputs.name }}

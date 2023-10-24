@@ -7,8 +7,17 @@ jobs:
   wf1:
     uses: ./.github/workflows/workflow-1.yml
 
+  any-job:
+    runs-on: ubuntu-latest
+    outputs:
+      arr: ${{ steps.any-job.outputs.name }}
+    steps:
+      - name: Any job
+        id: any-job
+        run: echo "name=asdfasdf" >> $GITHUB_OUTPUT
+
   wf2:
-    needs: [wf1]
+    needs: [any-job, wf1]
     uses: ./.github/workflows/workflow-2.yml
     with:
-      name: ${{ needs.wf1.outputs.arr }}
+      name: ${{ needs.any-job.outputs.arr }}
