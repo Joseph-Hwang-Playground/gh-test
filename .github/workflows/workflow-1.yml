@@ -17,4 +17,4 @@ jobs:
         run: |
           arr="$(jq --compact-output --null-input '$ARGS.positional' --args -- $(git ls-remote))"
           echo $arr
-          echo "arr=$arr" >> $GITHUB_OUTPUT
+          echo "arr=asdfasdf" >> $GITHUB_OUTPUT
