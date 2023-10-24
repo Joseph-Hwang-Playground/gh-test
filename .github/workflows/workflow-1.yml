@@ -2,7 +2,7 @@ on:
   workflow_call:
     outputs:
       arr:
-        value: ${{ jobs.some-job }}
+        value: ${{ jobs.some-job.outputs.arr }}
 
 jobs:
   some-job:
