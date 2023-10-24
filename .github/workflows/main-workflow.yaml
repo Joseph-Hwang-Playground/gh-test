@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  wf1:
+    uses: ./.github/workflows/workflow-1.yml
+
+  wf2:
+    needs: [wf1]
+    uses: ./.github/workflows/workflow-2.yml
+    with:
+      name: ${{ needs.wf1.outputs.arr }}

@@ -1,25 +1,19 @@
 on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: write
-  pull-requests: write
+  workflow_call:
+    outputs:
+      arr:
+        value: ${{ jobs.some-job }}
 
 jobs:
   some-job:
-    if: ${{ !contains(github.event.head_commit.message, '[versioning]')}}
     runs-on: ubuntu-latest
+    outputs:
+      arr: ${{ steps.step1.outputs.arr }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          ssh-key: ${{ secrets.COMMIT_KEY }}
       - run: |
-          echo "$EPOCHSECONDS" > version.txt
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add version.txt
-          git tag -a "$EPOCHSECONDS"
-          git commit -m "Bump version [versioning]"
-          git push -u --tags
+          echo "Hello world"
+      - id: step1
+        run: |
+          arr="$(jq --compact-output --null-input '$ARGS.positional' --args -- $(git ls-remote))"
+          echo "arr=$arr" >> $GITHUB_OUTPUT

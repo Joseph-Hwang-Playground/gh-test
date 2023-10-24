@@ -1,11 +1,16 @@
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_call:
+    inputs:
+      name:
+        type: string
+        description: "The name to say hello to"
+        required: true
 
 jobs:
   some-job:
-    if: ${{ contains(github.event.head_commit.message, '[versioning]')}}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello world"
+      - uses: actions/checkout@v3
+      - run: echo "$NAME"
+        env:
+          NAME: ${{ github.event.inputs.name }}
